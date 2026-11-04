@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#d94f70">
+  <meta name="description" content="A private, on-device cycle tracker.">
+  <title>Cycle Tracker</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <h1>Cycle Tracker</h1>
+  </header>
+
+  <main>
+    <!-- Summary: cycle day, next period, averages -->
+    <section class="card summary" id="summary" aria-live="polite"></section>
+
+    <!-- Calendar -->
+    <section class="card calendar">
+      <div class="cal-head">
+        <button class="icon-btn" id="prev-month" aria-label="Previous month">&#8249;</button>
+        <button class="month-label" id="month-label" title="Jump to today"></button>
+        <button class="icon-btn" id="next-month" aria-label="Next month">&#8250;</button>
+      </div>
+      <div class="weekdays" aria-hidden="true">
+        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+      </div>
+      <div class="grid" id="grid"></div>
+      <ul class="legend">
+        <li><i class="sw sw-period"></i>Period</li>
+        <li><i class="sw sw-spotting"></i>Spotting</li>
+        <li><i class="sw sw-predicted"></i>Predicted</li>
+        <li><i class="sw sw-dot"></i>Notes / symptoms</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Day details sheet -->
+  <dialog id="day-sheet">
+    <form method="dialog" id="day-form">
+      <div class="sheet-handle" aria-hidden="true"></div>
+      <h2 id="sheet-title" tabindex="-1" autofocus></h2>
+
+      <fieldset>
+        <legend>Flow</legend>
+        <div class="chips" id="flow-chips"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Symptoms</legend>
+        <div class="chips" id="symptom-chips"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Mood</legend>
+        <div class="chips" id="mood-chips"></div>
+      </fieldset>
+
+      <label class="notes">
+        <span>Notes</span>
+        <textarea id="notes" rows="3" placeholder="Anything else worth remembering…"></textarea>
+      </label>
+
+      <div class="sheet-actions">
+        <button type="button" class="btn ghost" id="clear-day">Clear day</button>
+        <button type="button" class="btn ghost" id="cancel">Cancel</button>
+        <button type="submit" class="btn primary" id="save">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- "Clear this day?" confirmation -->
+  <dialog id="confirm-clear" class="confirm" aria-labelledby="confirm-title">
+    <div class="confirm-body">
+      <h3 id="confirm-title" tabindex="-1" autofocus>Clear this day?</h3>
+      <p class="muted">Everything logged for this day will be removed.</p>
+      <div class="confirm-actions">
+        <button type="button" class="btn ghost" id="confirm-cancel">Keep</button>
+        <button type="button" class="btn danger" id="confirm-ok">Clear</button>
+      </div>
+    </div>
+  </dialog>
+</body>
+</html>
